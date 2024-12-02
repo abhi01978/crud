@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const userModel = require('./models/user');
 const user = require('./models/user');
+const { name } = require('ejs');
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -33,13 +34,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 //     res.send(updatedusre);
 //   }) 
 
-  
+    ///USER FIND//
 // app.get("/read",  async (req, res) =>{
-//    let usres = await userModel.find();
+//    let usres = await userModel.findOne({name: "abhishek"});
 //    res.send(usres);
 
 // })
 
+  //END//
 
 // app.get("/delete",  async (req, res) =>{
 //     let usres = await userModel.findOneAndDelete({username: "abhi"});
@@ -52,6 +54,34 @@ app.get('/', (req, res) =>{
     res.render("index");
 })
 
+
+
+app.get("/search", function (req, res) {
+
+  res.render("search");
+});
+
+// app.get("/save/:postid",  async function (req, res) {
+//   let user = await userModel.findOne({ username: req.session.passport.user });
+
+//   if (user.saved.indexOf(req.params.postid) === -1) {
+//     user.saved.push(req.params.postid);
+//   } else {
+//     var index = user.saved.indexOf(req.params.postid);
+//     user.saved.splice(index, 1);
+//   }
+//   await user.save();
+//   res.json(user);
+// });
+
+app.get("/search/:user", async function (req, res) {
+  const searchTerm = `^${req.params.user}`;
+  const regex = new RegExp(searchTerm);
+
+  let users = await userModel.find();
+
+  res.json(users);
+});
 
 app.get('/read', async (req, res) =>{
   let users = await userModel.find()
