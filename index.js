@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // }) 
 
-// console.log(process.env.DATABASE_UR);
+console.log(process.env.DATABASE_UR);
 
 // app.get('/create', async (req, res) => {
 //   let createuser = await userModel.create({
