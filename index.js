@@ -4,6 +4,7 @@ const path = require('path');
 const userModel = require('./models/user');
 const user = require('./models/user');
 const { name } = require('ejs');
+const dotenv = require('dotenv');
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // }) 
 
+// console.log(process.env.DATABASE_UR);
 
 // app.get('/create', async (req, res) => {
 //   let createuser = await userModel.create({
@@ -85,7 +87,7 @@ app.get("/search/:user", async function (req, res) {
 
 app.get('/read', async (req, res) =>{
   let users = await userModel.find()
-    res.render("read", {users});
+  res.render("read", {users});
 })
 
 
@@ -111,12 +113,12 @@ app.get('/delete/:id', async (req, res) =>{
 
 
 
-app.post('/create', async (req, res) =>{
+  app.post('/create', async (req, res) =>{
     let {name, email, image} = req.body;
   let createuser =  await userModel.create({
-        name,
-        email,
-        image,
+      name,
+      email,
+      image,
     })
     res.redirect("/read");
 
